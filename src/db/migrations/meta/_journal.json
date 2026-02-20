@@ -15,6 +15,20 @@
       "when": 1771602642863,
       "tag": "0001_rare_catseye",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1771605534704,
+      "tag": "0002_lazy_tusk",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1771611557044,
+      "tag": "0003_confused_lady_deathstrike",
+      "breakpoints": true
     }
   ]
 }
