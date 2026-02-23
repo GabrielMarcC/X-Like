@@ -29,14 +29,17 @@ export const posts = pgTable("posts", {
   authorId: uuid("author_id")
     .notNull()
     .references(() => users.id),
-  createdAt: timestamp("created_at")
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
     .defaultNow()
     .notNull()
     .$onUpdate(() => new Date()),
 });
 
-export const likes = pgTable(
-  "likes",
+export const reactionType = pgEnum("reaction_type", ["like", "deslike"]);
+
+export const reactions = pgTable(
+  "reactions",
   {
     userId: uuid("user_id")
       .notNull()
@@ -44,17 +47,18 @@ export const likes = pgTable(
     postId: uuid("post_id")
       .notNull()
       .references(() => posts.id),
+    type: reactionType("type"),
   },
   (t) => [uniqueIndex("user_post_unique").on(t.userId, t.postId)],
 );
 
-export const likesRelations = relations(likes, ({ one }) => ({
+export const reactionsRelations = relations(reactions, ({ one }) => ({
   user: one(users, {
-    fields: [likes.userId],
+    fields: [reactions.userId],
     references: [users.id],
   }),
   post: one(posts, {
-    fields: [likes.postId],
+    fields: [reactions.postId],
     references: [posts.id],
   }),
 }));

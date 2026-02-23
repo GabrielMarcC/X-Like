@@ -1,6 +1,7 @@
+import { eq } from "drizzle-orm";
 import { db } from "../../db";
 import { users } from "../../db/schema";
-import { createUserInput } from "../../types/users";
+import { createUserInput, UpdateUserInput } from "../../types/users";
 
 export const usersRepository = () => {
   const createUser = async (input: createUserInput) => {
@@ -24,5 +25,22 @@ export const usersRepository = () => {
     return result;
   };
 
-  return { createUser, findUserByEmail };
+  const updateUser = async (user: UpdateUserInput) => {
+    const [result] = await db
+      .update(users)
+      .set(user)
+      .where(eq(users.id, user.id!))
+      .returning({
+        id: users.id,
+        name: users.name,
+        email: users.email,
+        createdAt: users.createdAt,
+        updatedAt: users.updatedAt,
+        role: users.role,
+      });
+
+    return result;
+  };
+
+  return { createUser, findUserByEmail, updateUser };
 };

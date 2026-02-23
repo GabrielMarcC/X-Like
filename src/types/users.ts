@@ -1,9 +1,9 @@
 import z from "zod";
-import { createUserSchema } from "../schemas/users";
+import { createUserSchema, updateUserSchema } from "../schemas/users";
 
 export type createUserInput = z.infer<typeof createUserSchema>;
 
-export type UpdateUserInput = z.infer<typeof createUserSchema>;
+export type UpdateUserInput = z.infer<typeof updateUserSchema>;
 
 export type AuthPayload = {
   sub: string;

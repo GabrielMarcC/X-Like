@@ -1,4 +1,4 @@
-import { NextFunction, Request } from "express";
+import { Request } from "express";
 import { UnauthorizedError } from "../errors";
 import jwt from "jsonwebtoken";
 import * as argon2 from "argon2";
@@ -48,4 +48,10 @@ export const getBearerToken = (req: Request) => {
 export const hashPassword = async (password: string) => {
   const hash = await argon2.hash(password);
   return hash;
+};
+
+export const validatePassword = async (hash: string, password: string) => {
+  const result = await argon2.verify(hash, password);
+
+  return result;
 };

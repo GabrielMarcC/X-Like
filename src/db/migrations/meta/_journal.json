@@ -29,6 +29,20 @@
       "when": 1771611557044,
       "tag": "0003_confused_lady_deathstrike",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1771862271752,
+      "tag": "0004_crazy_ego",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1771869079991,
+      "tag": "0005_lying_manta",
+      "breakpoints": true
     }
   ]
 }

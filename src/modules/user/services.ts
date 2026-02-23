@@ -10,7 +10,7 @@ export const createUserService = async (user: createUserInput) => {
   const findedUser = await usersRepository().findUserByEmail(input.email);
 
   if (findedUser) {
-    throw new BadRequestError("User already exists");
+    throw new BadRequestError("Email already in use");
   }
 
   const hash = await hashPassword(input.password);
