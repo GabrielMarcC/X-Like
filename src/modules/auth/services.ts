@@ -1,14 +1,12 @@
 import { UnauthorizedError } from "../../errors";
 import { createJWT, validatePassword } from "../../lib/auth";
 import { config } from "../../lib/config";
-import { loginSchema } from "../../schemas/auth";
+import { EXPIRATION_TOKEN_TIME } from "../../lib/constants/hour";
 import { LoginInput } from "../../types/auth";
 import { usersRepository } from "../user/repositories";
 
 export const loginAuthService = async (user: LoginInput) => {
-  const input = loginSchema.parse(user);
-
-  const findedUser = await usersRepository().findUserByEmail(input.email);
+  const findedUser = await usersRepository.findUserByEmail(user.email);
 
   if (!findedUser) {
     throw new UnauthorizedError("Invalid credentials");
@@ -23,7 +21,12 @@ export const loginAuthService = async (user: LoginInput) => {
     throw new UnauthorizedError("Invalid credentials");
   }
 
-  const jwt = createJWT(findedUser.id, findedUser.role!, config.secret);
+  const token = createJWT(
+    findedUser.id,
+    findedUser.role!,
+    config.secret,
+    EXPIRATION_TOKEN_TIME,
+  );
 
-  return { token: jwt };
+  return { token };
 };

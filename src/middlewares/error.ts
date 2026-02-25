@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
+import { ZodError } from "zod";
+import { formatZodError } from "../lib/format-error";
 
 export const globalErrorMiddleware = (
   err: any,
@@ -7,8 +9,17 @@ export const globalErrorMiddleware = (
   res: Response,
   next: NextFunction,
 ) => {
-  console.error(err);
   const status = err.statusCode || err.status || 500;
+
+  if (err instanceof ZodError) {
+    const message = formatZodError(err);
+
+    return res.status(400).json({
+      type: "validation_error",
+      message: "Invalid request body",
+      fields: message,
+    });
+  }
 
   if (err instanceof JsonWebTokenError) {
     res.status(401).json({

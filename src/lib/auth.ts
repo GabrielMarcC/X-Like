@@ -7,18 +7,19 @@ export const createJWT = (
   userId: string,
   role: "user" | "admin",
   secret: string,
-  expiresIn?: number,
+  expiresIn: number,
 ) => {
-  const result = jwt.sign(
+  const token = jwt.sign(
     {
       sub: userId,
       role,
-      expiresIn: expiresIn ?? "6h",
     },
     secret,
+    {
+      expiresIn: expiresIn ?? 6 * 3600,
+    },
   );
-
-  return result;
+  return token;
 };
 
 export const validateJWT = (token: string, secret: string) => {
