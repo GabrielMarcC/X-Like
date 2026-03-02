@@ -1,7 +1,7 @@
 import { UnauthorizedError } from "../../errors";
 import { createJWT, validatePassword } from "../../lib/auth";
 import { config } from "../../lib/config";
-import { EXPIRATION_TOKEN_TIME } from "../../lib/constants/hour";
+import { EXPIRATION_TOKEN_TIME } from "../../lib/constants/auth";
 import { LoginInput } from "../../types/auth";
 import { usersRepository } from "../user/repositories";
 

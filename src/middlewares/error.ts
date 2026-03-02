@@ -11,6 +11,8 @@ export const globalErrorMiddleware = (
 ) => {
   const status = err.statusCode || err.status || 500;
 
+  console.log(err);
+
   if (err instanceof ZodError) {
     const message = formatZodError(err);
 

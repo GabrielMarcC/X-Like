@@ -9,7 +9,7 @@ import { authMiddleware } from "../../middlewares/auth";
 const router = Router();
 
 router.post("/", handlerCreateUser);
-router.patch("/:id", authMiddleware, handlerUpdateUser);
+router.put("/:id", authMiddleware, handlerUpdateUser);
 router.delete("/:id", authMiddleware, hanlderDeleteUser);
 
 export const usersRoutes = router;
